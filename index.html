@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  Employee Payroll Manager</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assume styles.css for basic styling -->
+</head>
+<body>
+    <header>
+        <h1> Employee Payroll Manager</h1>
+    </header>
+
+    <section class="employee-form">
+        <h2>Add New Employee</h2>
+        <form id="employee-form">
+            <input type="text" id="name" placeholder="Name">
+            <input type="number" id="salary" placeholder="Salary">
+            <input type="number" id="attendance" placeholder="Attendance">
+            <button type="button" id="add-employee">Add Employee</button>
+        </form>
+    </section>
+
+    <section class="employee-list">
+        <h2>Employee List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th>Attendance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="employee-table-body">
+                <!-- Employee rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <script src="Script.js"></script> 
+</body>
+</html>

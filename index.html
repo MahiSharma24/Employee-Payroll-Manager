@@ -3,41 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>  Employee Payroll Manager</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Assume styles.css for basic styling -->
+    <title>Employee Payroll Manager</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1> Employee Payroll Manager</h1>
-    </header>
+    <div class="container">
+        <h1>Employee Payroll Manager</h1>
+        <div class="theme-toggle">
+            <label for="themeSwitch">Toggle Theme</label>
+            <input type="checkbox" id="themeSwitch">
+        </div>
+        <form id="employeeForm">
+            <label for="employeeName">Employee Name:</label>
+            <input type="text" id="employeeName" required>
 
-    <section class="employee-form">
-        <h2>Add New Employee</h2>
-        <form id="employee-form">
-            <input type="text" id="name" placeholder="Name">
-            <input type="number" id="salary" placeholder="Salary">
-            <input type="number" id="attendance" placeholder="Attendance">
-            <button type="button" id="add-employee">Add Employee</button>
+            <label for="baseSalary">Base Salary:</label>
+            <input type="number" id="baseSalary" required>
+
+            <label for="attendance">Attendance (Days):</label>
+            <input type="number" id="attendance" required>
+
+            <button type="submit">Add Employee</button>
         </form>
-    </section>
 
-    <section class="employee-list">
         <h2>Employee List</h2>
-        <table>
+        <table id="employeeTable">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Salary</th>
+                    <th>Base Salary</th>
                     <th>Attendance</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="employee-table-body">
-                <!-- Employee rows will be dynamically added here -->
+            <tbody>
+                <!-- Employee records will be appended here -->
             </tbody>
         </table>
-    </section>
 
-    <script src="Script.js"></script> 
+        <h2>Statistics</h2>
+        <p id="totalEmployees">Total Employees: 0</p>
+        <p id="averageSalary">Average Salary: ₹ 0.00</p>
+    </div>
+
+    <script src="Script.js"></script>
 </body>
 </html>

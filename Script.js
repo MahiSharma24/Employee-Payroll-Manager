@@ -1,71 +1,55 @@
-// JavaScript for SalaryBox functionality
+document.getElementById('employeeForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form submission
 
-// DOM Elements
-const employeeForm = document.getElementById("employee-form");
-const employeeTableBody = document.getElementById("employee-table-body");
-const addEmployeeButton = document.getElementById("add-employee");
+  // Get input values
+  const employeeName = document.getElementById('employeeName').value;
+  const baseSalary = parseFloat(document.getElementById('baseSalary').value);
+  const attendance = parseInt(document.getElementById('attendance').value);
 
-// Employee data (in-memory storage for this example)
-let employees = [];
+  // Create a new table row
+  const employeeTableBody = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
+  const newRow = employeeTableBody.insertRow();
 
-// Function to add a new employee
-function addEmployee() {
-    const nameInput = document.getElementById("name").value;
-    const salaryInput = document.getElementById("salary").value;
-    const attendanceInput = document.getElementById("attendance").value;
+  // Insert cells
+  newRow.insertCell(0).textContent = employeeName;
+  newRow.insertCell(1).textContent = `₹${baseSalary.toFixed(2)}`;
+  newRow.insertCell(2).textContent = attendance;
 
-    if (!nameInput || !salaryInput || !attendanceInput) {
-        alert("Please fill in all fields.");
-        return;
-    }
+  // Create delete button
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.onclick = function() {
+      employeeTableBody.deleteRow(newRow.rowIndex - 1); // Adjust for header row
+      updateStatistics(); // Update statistics after deletion
+  };
+  
+  newRow.insertCell(3).appendChild(deleteButton);
 
-    const newEmployee = {
-        id: Date.now(), // Unique ID based on timestamp
-        name: nameInput,
-        salary: parseFloat(salaryInput),
-        attendance: parseInt(attendanceInput, 10),
-    };
+  // Clear the form
+  this.reset();
 
-    employees.push(newEmployee);
-    renderEmployeeTable();
+  // Update statistics
+  updateStatistics();
+});
 
-    // Clear input fields
-    employeeForm.reset();
+function updateStatistics() {
+  const employeeTableBody = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
+  const rows = employeeTableBody.rows;
+  const totalEmployees = rows.length;
+  let totalSalary = 0;
+
+  for (let i = 0; i < totalEmployees; i++) {
+      const salaryText = rows[i].cells[1].textContent; // Get the base salary from the table
+      const salary = parseFloat(salaryText.replace(/[^0-9.-]+/g, ""));
+      totalSalary += salary; // Sum the total salary
+  }
+
+  const averageSalary = totalEmployees > 0 ? (totalSalary / totalEmployees).toFixed(2) : 0;
+
+  document.getElementById('totalEmployees').textContent = `Total Employees: ${totalEmployees}`;
+  document.getElementById('averageSalary').textContent = `Average Salary: $${averageSalary}`;
 }
 
-// Function to render the employee table
-function renderEmployeeTable() {
-    employeeTableBody.innerHTML = ""; // Clear existing rows
-
-    if (employees.length === 0) {
-        employeeTableBody.innerHTML = "<tr><td colspan='4'>No employees found.</td></tr>";
-        return;
-    }
-
-    employees.forEach((employee) => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${employee.name}</td>
-            <td>${employee.salary.toFixed(2)}</td>
-            <td>${employee.attendance}</td>
-            <td>
-                <button class="delete-button" onclick="deleteEmployee(${employee.id})">Delete</button>
-            </td>
-        `;
-
-        employeeTableBody.appendChild(row);
-    });
-}
-
-// Function to delete an employee by ID
-function deleteEmployee(employeeId) {
-    employees = employees.filter((employee) => employee.id !== employeeId);
-    renderEmployeeTable();
-}
-
-// Event Listener for Add Employee Button
-addEmployeeButton.addEventListener("click", addEmployee);
-
-// Initial render
-renderEmployeeTable();
+document.getElementById('themeSwitch').addEventListener('change', function() {
+  document.body.classList.toggle('dark-mode', this.checked);
+});
